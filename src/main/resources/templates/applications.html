@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{applications.applications}">Applications</title>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0"
+            crossorigin="anonymous">
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<nav style="width: 96%; margin: auto;"
+     class="navbar navbar-expand-sm navbar-light bg-light">
+    <div class="container-fluid">
+        <span class="navbar-brand">Hotel</span> <span><a
+            class="nav-link" href="/?localeData=ru">🇷🇺</a> </span> <span><a
+            class="nav-link" href="/?localeData=en">🇬🇧</a> </span>
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" aria-current="page"
+                                        href="/"><span th:text="#{rooms.home}"></span></a></li>
+                <li sec:authorize="isAuthenticated()" class='nav-item'><a class='nav-link' href='logout'><span
+                        th:text="#{index.logout}"></span></a></li>
+                <li sec:authorize="!isAuthenticated()" class='nav-item'><a class='nav-link' href='signin'><span
+                        th:text="#{index.signin}"></span></a></li>
+                <li sec:authorize="!isAuthenticated()" class='nav-item'><a class='nav-link' href='signup'><span
+                        th:text="#{index.signup}"></span></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="container p-2">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <div class="list-group">
+                        <a th:each="applicationOnPage : ${applications}" th:href="@{form(id=${applicationOnPage.id})}"
+                           class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">
+                                    <span th:text="#{applications.number}"></span>
+                                    №<span th:text="${applicationOnPage.id}"></span>
+                                </h5>
+                                <small class="text-muted">3 days ago</small>
+                            </div>
+                            <p class="mb-1">
+                                <span th:text="#{applications.class}"></span>
+                                : <span th:text="${applicationOnPage.roomClass.name}"></span>
+                            </p>
+                            <p class="mb-1">
+                                <span th:text="#{applications.space}"></span>
+                                : <span th:text="${applicationOnPage.space}"></span>
+                            </p>
+                            <p class="mb-1">
+                                <span th:text="#{applications.arrival}"></span>
+                                : <span th:text="${applicationOnPage.arrival}"></span>
+                            </p>
+                            <p class="mb-1">
+                                <span th:text="#{applications.leaving}"></span>
+                                : <span th:text="${applicationOnPage.leaving}"></span>
+                            </p>
+                        </a>
+                </div>
+                <p th:if="applications.size == 0" class="text-center p-5">
+                    <span th:text="#{applications.noapplications}"></span>
+                </p>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -17,32 +17,32 @@
 <div class="container h-100">
     <div class="row h-100 justify-content-center align-items-center">
         <div class="col-10 col-md-8 col-lg-6">
-            <div th:if="${#fields.hasErrors('global')}" th:errors="*{global}" class="text-danger">Global error</div>
             <form th:action="@{/signup}" th:object="${user}" method="post">
+                <div th:if="${#fields.hasErrors('global')}" th:errors="*{global}" class="text-danger">Global error</div>
                 <div class="mb-3">
                     <label class="form-label"><span th:text="#{signup.firstname}"></span></label>
-                    <input type="text" class="form-control" th:field="*{firstName}">
-                    <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First name error</span>
+                    <input type="text" class="form-control" th:field="*{firstName}" required>
+                    <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="text-danger">First name error</span>
                 </div>
                 <div class="mb-3">
                     <label class="form-label"><span th:text="#{signup.lastname}"></span></label>
-                    <input type="text" class="form-control" th:field="*{lastName}">
-                    <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last name error</span>
+                    <input type="text" class="form-control" th:field="*{lastName}" required>
+                    <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="text-danger">Last name error</span>
                 </div>
                 <div class="mb-3">
                     <label class="form-label"><span th:text="#{signup.phone}"></span></label>
-                    <input type="text" class="form-control" th:field="*{phone}">
-                    <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Phone error</span>
+                    <input type="text" class="form-control" th:field="*{phone}" required>
+                    <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="text-danger">Phone error</span>
                 </div>
                 <div class="mb-3">
                     <label class="form-label"><span th:text="#{signup.email}"></span></label>
-                    <input type="text" class="form-control" th:field="*{email}">
-                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</span>
+                    <input type="text" class="form-control" th:field="*{email}" required>
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger">Email error</span>
                 </div>
                 <div class="mb-3">
                     <label class="form-label"><span th:text="#{signup.password}"></span></label>
-                    <input type="password" class="form-control" th:field="*{password}">
-                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</span>
+                    <input type="password" class="form-control" th:field="*{password}" required>
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger">Password error</span>
                 </div>
                 <button type="submit" class="btn btn-primary"><span th:text="#{signup.signup}"></span></button>
             </form>

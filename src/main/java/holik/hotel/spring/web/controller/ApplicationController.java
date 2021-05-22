@@ -1,5 +1,10 @@
 package holik.hotel.spring.web.controller;
 
+import holik.hotel.spring.persistence.model.Application;
+import holik.hotel.spring.persistence.model.User;
+import holik.hotel.spring.service.ApplicationService;
+import holik.hotel.spring.service.UserService;
+import holik.hotel.spring.web.converter.ApplicationConverter;
 import holik.hotel.spring.web.dto.ApplicationDto;
 import holik.hotel.spring.web.validator.ApplicationValidator;
 import org.springframework.stereotype.Controller;
@@ -10,17 +15,27 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.time.Duration;
+import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 public class ApplicationController {
     private static final long DAYS_PERIOD = 1;
     private static final int TIME_OFFSET = 16;
     private final ApplicationValidator applicationValidator;
+    private final ApplicationConverter applicationConverter;
+    private final UserService userService;
+    private final ApplicationService applicationService;
 
-    public ApplicationController(ApplicationValidator applicationValidator) {
+    public ApplicationController(ApplicationValidator applicationValidator,
+                                 ApplicationConverter applicationConverter,
+                                 UserService userService,
+                                 ApplicationService applicationService) {
         this.applicationValidator = applicationValidator;
+        this.applicationConverter = applicationConverter;
+        this.userService = userService;
+        this.applicationService = applicationService;
     }
 
     @GetMapping("/application")
@@ -32,12 +47,25 @@ public class ApplicationController {
     }
 
     @PostMapping("/application")
-    public String createApplication(@Valid @ModelAttribute("application") ApplicationDto applicationDto, BindingResult bindingResult) {
+    public String createApplication(@Valid @ModelAttribute("application") ApplicationDto applicationDto,
+                                    BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors() || !applicationValidator.isValid(applicationDto, bindingResult)) {
             return "application";
         }
+
+        String userEmail = principal.getName();
+        User user = userService.getUserByEmail(userEmail).orElseThrow();
+        applicationDto.setUser(user);
+        Application application = applicationConverter.convertToEntity(applicationDto);
+        applicationService.createApplication(application);
         return "redirect:/";
     }
 
+    @GetMapping("/applications")
+    public String getApplications(Model model) {
+        List<Application> requestedApplications = applicationService.getRequestedApplications();
+        model.addAttribute("applications", requestedApplications);
+        return "applications";
+    }
 
 }

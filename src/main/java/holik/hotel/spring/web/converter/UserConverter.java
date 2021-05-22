@@ -15,7 +15,7 @@ public class UserConverter implements Converter<UserDto, User> {
     }
 
     @Override
-    public User covertToEntity(UserDto userDto) {
+    public User convertToEntity(UserDto userDto) {
         String passwordHash = passwordEncoder.encode(userDto.getPassword());
         Role role = new Role();
         role.setId(2);

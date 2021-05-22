@@ -1,10 +1,12 @@
 package holik.hotel.spring.web.dto;
 
+import holik.hotel.spring.persistence.model.User;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
 public class ApplicationDto {
+    private User user;
     private int space;
     private int roomClassId;
 
@@ -43,5 +45,13 @@ public class ApplicationDto {
 
     public void setLeaving(LocalDateTime leaving) {
         this.leaving = leaving;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

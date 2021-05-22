@@ -10,17 +10,24 @@ public class Application {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int userId;
-    private int space;
-    private int roomId;
+
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name="room_id")
+    private Room room;
 
     @ManyToOne
     @JoinColumn(name="room_class", nullable=false)
     private RoomClass roomClass;
+
     @ManyToOne
     @JoinColumn(name="status", nullable=false)
     private ApplicationStatus status;
 
+    private int space;
     private LocalDateTime arrival;
     private LocalDateTime leaving;
     private LocalDateTime booked;
@@ -31,14 +38,6 @@ public class Application {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public int getSpace() {
@@ -73,14 +72,6 @@ public class Application {
         this.leaving = datetimeOfLeaving;
     }
 
-    public int getRoomId() {
-        return roomId;
-    }
-
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
-    }
-
     public ApplicationStatus getStatus() {
         return status;
     }
@@ -95,5 +86,21 @@ public class Application {
 
     public void setBooked(LocalDateTime datetimeOfBooking) {
         this.booked = datetimeOfBooking;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 }

@@ -42,7 +42,7 @@ public class UserController {
             return "signup";
         }
 
-        userService.createUser(userConverter.covertToEntity(userDto));
+        userService.createUser(userConverter.convertToEntity(userDto));
         return "redirect:/";
     }
 
