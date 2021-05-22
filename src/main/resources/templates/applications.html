@@ -73,7 +73,7 @@
                             </p>
                         </a>
                 </div>
-                <p th:if="applications.size == 0" class="text-center p-5">
+                <p th:if="${applications.size} == 0" class="text-center p-5">
                     <span th:text="#{applications.noapplications}"></span>
                 </p>
             </div>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0"
+            crossorigin="anonymous">
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+            crossorigin="anonymous"></script>
+    <title th:text="#{applicationform.form}"></title>
+</head>
+<body class="h-100">
+<div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-10 col-md-8 col-lg-6">
+
+            <form th:action="@{/form(id=${applicationData.id})}" method="post">
+                <div class="mb-3">
+                    <label class="form-label">
+                        <span th:text="#{applicationform.name}"></span>
+                        <span th:text="${applicationData.user.firstName}"></span>
+                        <span th:text="${applicationData.user.lastName}"></span>
+                    </label>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">
+                        <span th:text="#{applicationform.room.class}"></span>
+                        <span th:text="${applicationData.roomClass.name}"></span>
+                    </label>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">
+                        <span th:text="#{applicationform.room.space}"></span>
+                        <span th:text="${applicationData.space}"></span>
+                    </label>
+                </div>
+                <div class="mb-3">
+                    <div class="mb-3">
+                        <label class="form-label">
+                            <span th:text="#{applicationform.choice}"></span>
+                        </label>
+                        <select class="form-select" name="choice" required>
+                            <option selected value="decline">
+                                <span th:text="#{applicationform.decline}"></span>
+                            </option>
+                            <option th:each="room : ${rooms}" th:value="${room.id}">
+                                <span th:text="#{applicationform.room}"></span>
+                                <span th:text="${room.number}"></span>
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" th:text="#{applicationform.submit}">
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

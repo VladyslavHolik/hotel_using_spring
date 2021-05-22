@@ -17,10 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Controller
-public class ApplicationController {
+public class ApplicationCreationController {
     private static final long DAYS_PERIOD = 1;
     private static final int TIME_OFFSET = 16;
     private final ApplicationValidator applicationValidator;
@@ -28,10 +27,10 @@ public class ApplicationController {
     private final UserService userService;
     private final ApplicationService applicationService;
 
-    public ApplicationController(ApplicationValidator applicationValidator,
-                                 ApplicationConverter applicationConverter,
-                                 UserService userService,
-                                 ApplicationService applicationService) {
+    public ApplicationCreationController(ApplicationValidator applicationValidator,
+                                         ApplicationConverter applicationConverter,
+                                         UserService userService,
+                                         ApplicationService applicationService) {
         this.applicationValidator = applicationValidator;
         this.applicationConverter = applicationConverter;
         this.userService = userService;
@@ -60,12 +59,4 @@ public class ApplicationController {
         applicationService.createApplication(application);
         return "redirect:/";
     }
-
-    @GetMapping("/applications")
-    public String getApplications(Model model) {
-        List<Application> requestedApplications = applicationService.getRequestedApplications();
-        model.addAttribute("applications", requestedApplications);
-        return "applications";
-    }
-
 }
