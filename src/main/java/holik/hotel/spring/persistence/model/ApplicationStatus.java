@@ -1,6 +1,7 @@
 package holik.hotel.spring.persistence.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Application_statuses")
@@ -37,5 +38,30 @@ public class ApplicationStatus {
         ApplicationStatus statusPaid = new ApplicationStatus();
         statusPaid.setId(5);
         return statusPaid;
+    }
+
+    public static ApplicationStatus getStatusApproved() {
+        ApplicationStatus statusApproved = new ApplicationStatus();
+        statusApproved.setId(2);
+        return statusApproved;
+    }
+
+    public static ApplicationStatus getStatusDeclined() {
+        ApplicationStatus statusDeclined = new ApplicationStatus();
+        statusDeclined.setId(3);
+        return statusDeclined;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ApplicationStatus status = (ApplicationStatus) o;
+        return id == status.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

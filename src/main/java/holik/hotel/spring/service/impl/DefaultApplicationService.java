@@ -58,17 +58,13 @@ public class DefaultApplicationService implements ApplicationService {
     @Override
     public void processApplication(Application application, String choice) {
         if ("decline".equals(choice)) {
-            ApplicationStatus status = new ApplicationStatus();
-            status.setId(3);
-            // status declined;
+            ApplicationStatus status = ApplicationStatus.getStatusDeclined();
             application.setStatus(status);
         } else {
             int roomId = Integer.parseInt(choice);
             Room room = roomService.getRoomById(roomId).orElseThrow();
             application.setRoom(room);
-            ApplicationStatus status = new ApplicationStatus();
-            status.setId(2);
-            // status approved;
+            ApplicationStatus status = ApplicationStatus.getStatusApproved();
             application.setStatus(status);
         }
         updateApplication(application);
@@ -81,8 +77,7 @@ public class DefaultApplicationService implements ApplicationService {
 
     @Override
     public List<Application> getReadyToBookApplications(User user) {
-        ApplicationStatus statusApproved = new ApplicationStatus();
-        statusApproved.setId(2);
+        ApplicationStatus statusApproved = ApplicationStatus.getStatusApproved();
 
         List<Application> readyToBookApplications = new ArrayList<>();
         List<Application> approvedApplications = applicationRepository.getApplicationsByStatusAndUser(statusApproved, user);
@@ -97,11 +92,8 @@ public class DefaultApplicationService implements ApplicationService {
     @Override
     public boolean canBeBooked(Application application) {
         boolean result = true;
-        ApplicationStatus statusBooked = new ApplicationStatus();
-        statusBooked.setId(4);
-
-        ApplicationStatus statusPaid = new ApplicationStatus();
-        statusPaid.setId(5);
+        ApplicationStatus statusBooked = ApplicationStatus.getStatusBooked();
+        ApplicationStatus statusPaid = ApplicationStatus.getStatusPaid();
 
         LocalDateTime arrival = application.getArrival();
         LocalDateTime leaving = application.getLeaving();
@@ -114,7 +106,7 @@ public class DefaultApplicationService implements ApplicationService {
             LocalDateTime originArrival = originApplication.getArrival();
             LocalDateTime originLeaving = originApplication.getLeaving();
             if (isBetween(arrival, originArrival, originLeaving) ||
-            isBetween(leaving, originArrival, originLeaving)) {
+            isBetween(leaving, originArrival, originLeaving) || isBetween(originArrival, arrival, leaving)) {
                 result = false;
                 break;
             }
@@ -124,8 +116,7 @@ public class DefaultApplicationService implements ApplicationService {
 
     @Override
     public void bookRoom(Application application) {
-        ApplicationStatus statusBooked = new ApplicationStatus();
-        statusBooked.setId(4);
+        ApplicationStatus statusBooked = ApplicationStatus.getStatusBooked();
         application.setStatus(statusBooked);
         application.setBooked(LocalDateTime.now());
         updateApplication(application);
@@ -133,8 +124,7 @@ public class DefaultApplicationService implements ApplicationService {
 
     @Override
     public List<Application> getBookedApplicationsByUser(User user) {
-        ApplicationStatus statusBooked = new ApplicationStatus();
-        statusBooked.setId(4);
+        ApplicationStatus statusBooked = ApplicationStatus.getStatusBooked();
         return applicationRepository.getApplicationsByStatusAndUser(statusBooked, user);
     }
 
@@ -143,10 +133,8 @@ public class DefaultApplicationService implements ApplicationService {
         LocalDateTime datetimeOfArrival = application.getArrival();
         LocalDateTime datetimeOfLeaving = application.getLeaving();
 
-        ApplicationStatus booked = new ApplicationStatus();
-        booked.setId(4);
-        ApplicationStatus paid = new ApplicationStatus();
-        paid.setId(5);
+        ApplicationStatus booked = ApplicationStatus.getStatusBooked();
+        ApplicationStatus paid = ApplicationStatus.getStatusPaid();
 
         List<Application> bookedApplications = getApplicationsByStatus(booked);
         List<Application> paidApplications = getApplicationsByStatus(paid);
@@ -160,7 +148,8 @@ public class DefaultApplicationService implements ApplicationService {
                     && (isBetween(datetimeOfArrival, originApplication.getArrival(),
                     originApplication.getLeaving())
                     || isBetween(datetimeOfLeaving, originApplication.getArrival(),
-                    originApplication.getLeaving()))) {
+                    originApplication.getLeaving())
+                    || isBetween(originApplication.getArrival(), datetimeOfArrival, datetimeOfLeaving))) {
                 result = false;
                 break;
             }

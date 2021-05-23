@@ -69,7 +69,7 @@ public class ApplicationValidator {
     public void validateForPaying(int applicationId, User user) {
         Application application = applicationService.getApplicationById(applicationId).orElseThrow();
         if (!(user.getId() == application.getUser().getId() && application.getStatus().getId() == 4)) {
-            throw new IllegalStateException("Application can't be paid");
+            throw new IllegalArgumentException("Application can't be paid");
         }
     }
 }
