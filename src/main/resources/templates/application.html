@@ -20,7 +20,7 @@
       <form th:action="@{/application}" method="post" th:object="${application}">
         <div class="mb-3">
           <label class="form-label" th:text="#{application.space}"></label>
-            <input type="number" min="1" max="6" class="form-control" th:field="*{space}" required>
+            <input type="number"  min="1" max="6" class="form-control" th:field="*{space}" required>
           <span th:if="${#fields.hasErrors('space')}" th:errors="*{space}" class="text-danger">Space Error</span>
         </div>
         <div class="mb-3">

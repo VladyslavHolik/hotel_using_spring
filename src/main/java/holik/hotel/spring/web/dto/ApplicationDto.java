@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public class ApplicationDto {
     private User user;
-    private int space;
+    private int space = 1;
     private int roomClassId;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
