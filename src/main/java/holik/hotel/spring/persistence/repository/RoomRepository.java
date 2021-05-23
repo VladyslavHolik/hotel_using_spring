@@ -12,4 +12,5 @@ import java.util.List;
 @Repository
 public interface RoomRepository extends CrudRepository<Room, Integer>, PagingAndSortingRepository<Room, Integer> {
     List<Room> getRoomsByRoomClassAndSpaceAndRoomStatusIsNot(RoomClass roomClass, int space, RoomStatus roomStatus);
+    List<Room> getRoomsByRoomStatusIsNot(RoomStatus roomStatus);
 }

@@ -12,4 +12,6 @@ public interface RoomService {
     Page<Room> findPaginated(Pageable pageable);
     Optional<Room> getRoomById(int id);
     List<Room> getAvailableRooms(RoomClass roomClass, int space);
+    List<Room> getAvailableRooms();
+    void updateRoom(Room room);
 }

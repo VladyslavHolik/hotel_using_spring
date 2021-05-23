@@ -26,4 +26,16 @@ public class ApplicationStatus {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public static ApplicationStatus getStatusBooked() {
+        ApplicationStatus statusBooked = new ApplicationStatus();
+        statusBooked.setId(4);
+        return statusBooked;
+    }
+
+    public static ApplicationStatus getStatusPaid() {
+        ApplicationStatus statusPaid = new ApplicationStatus();
+        statusPaid.setId(5);
+        return statusPaid;
+    }
 }
