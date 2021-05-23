@@ -94,7 +94,8 @@ public class DefaultApplicationService implements ApplicationService {
         return readyToBookApplications;
     }
 
-    private boolean canBeBooked(Application application) {
+    @Override
+    public boolean canBeBooked(Application application) {
         boolean result = true;
         ApplicationStatus statusBooked = new ApplicationStatus();
         statusBooked.setId(4);
@@ -119,6 +120,22 @@ public class DefaultApplicationService implements ApplicationService {
             }
         }
         return result;
+    }
+
+    @Override
+    public void bookRoom(Application application) {
+        ApplicationStatus statusBooked = new ApplicationStatus();
+        statusBooked.setId(4);
+        application.setStatus(statusBooked);
+        application.setBooked(LocalDateTime.now());
+        updateApplication(application);
+    }
+
+    @Override
+    public List<Application> getBookedApplicationsByUser(User user) {
+        ApplicationStatus statusBooked = new ApplicationStatus();
+        statusBooked.setId(4);
+        return applicationRepository.getApplicationsByStatusAndUser(statusBooked, user);
     }
 
     private boolean isAvailable(Room room, Application application) {

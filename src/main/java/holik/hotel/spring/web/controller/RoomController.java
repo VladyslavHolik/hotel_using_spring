@@ -58,7 +58,7 @@ public class RoomController {
     }
 
     @GetMapping("/room")
-    public String roomPage(Model model, @RequestParam("id") Integer id) {
+    public String roomPage(Model model, @RequestParam("id") int id) {
         Optional<Room> optionalRoom = roomService.getRoomById(id);
         if (optionalRoom.isPresent()) {
             model.addAttribute("room", optionalRoom.get());

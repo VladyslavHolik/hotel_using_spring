@@ -17,4 +17,7 @@ public interface ApplicationService {
     void processApplication(Application application, String choice);
     void updateApplication(Application application);
     List<Application> getReadyToBookApplications(User user);
+    boolean canBeBooked(Application application);
+    void bookRoom(Application application);
+    List<Application> getBookedApplicationsByUser(User user);
 }
