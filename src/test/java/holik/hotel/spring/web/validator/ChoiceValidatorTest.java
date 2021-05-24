@@ -6,13 +6,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class ChoiceValidatorTest {
     @Mock
     private RoomService roomService;
@@ -46,11 +46,13 @@ public class ChoiceValidatorTest {
         choiceValidator.validateChoice("5");
     }
 
+    @Test
     public void validateChoiceIfValid() {
         when(roomService.getRoomById(2)).thenReturn(Optional.of(new Room()));
         choiceValidator.validateChoice("2");
     }
 
+    @Test
     public void validateChoiceIfValidDeclined() {
         choiceValidator.validateChoice("decline");
     }

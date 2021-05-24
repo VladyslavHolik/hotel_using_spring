@@ -5,22 +5,21 @@ import holik.hotel.spring.persistence.model.Bill;
 import holik.hotel.spring.persistence.model.Room;
 import holik.hotel.spring.persistence.model.User;
 import holik.hotel.spring.service.ApplicationService;
-import holik.hotel.spring.service.BillService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class DefaultBillServiceTest {
     @Mock
     private ApplicationService applicationService;
@@ -40,7 +39,7 @@ public class DefaultBillServiceTest {
         application.setLeaving(now.plusDays(2));
 
         List<Application> bookedApplications = new ArrayList<>();
-        bookedApplications.add(application);;
+        bookedApplications.add(application);
 
         User user = new User();
         when(applicationService.getBookedApplicationsByUser(user)).thenReturn(bookedApplications);
