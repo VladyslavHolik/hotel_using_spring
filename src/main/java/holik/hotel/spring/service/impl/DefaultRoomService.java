@@ -32,15 +32,13 @@ public class DefaultRoomService implements RoomService {
 
     @Override
     public List<Room> getAvailableRooms(RoomClass roomClass, int space) {
-        RoomStatus statusUnavailable = new RoomStatus();
-        statusUnavailable.setId(4);
+        RoomStatus statusUnavailable = RoomStatus.getStatusUnavailable();
         return roomRepository.getRoomsByRoomClassAndSpaceAndRoomStatusIsNot(roomClass, space, statusUnavailable);
     }
 
     @Override
     public List<Room> getAvailableRooms() {
-        RoomStatus statusUnavailable = new RoomStatus();
-        statusUnavailable.setId(4);
+        RoomStatus statusUnavailable = RoomStatus.getStatusUnavailable();
         return roomRepository.getRoomsByRoomStatusIsNot(statusUnavailable);
     }
 

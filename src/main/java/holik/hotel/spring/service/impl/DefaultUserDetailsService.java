@@ -13,7 +13,6 @@ import java.util.Optional;
 
 @Service
 public class DefaultUserDetailsService implements UserDetailsService {
-
     @Autowired
     private UserService userService;
 

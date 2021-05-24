@@ -1,6 +1,7 @@
 package holik.hotel.spring.persistence.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Room_classes")
@@ -25,5 +26,18 @@ public class RoomClass {
 
     public void setName(String className) {
         this.className = className;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RoomClass roomClass = (RoomClass) o;
+        return classId == roomClass.classId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(classId);
     }
 }
