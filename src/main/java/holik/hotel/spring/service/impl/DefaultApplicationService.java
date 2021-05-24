@@ -46,13 +46,13 @@ public class DefaultApplicationService implements ApplicationService {
     public List<Room> getFreeRooms(Application application) {
         List<Room> availableRooms = roomService.getAvailableRooms(application.getRoomClass(), application.getSpace());
         return availableRooms.stream()
-                .filter((room) -> isAvailable(room, application))
+                .filter(room -> isAvailable(room, application))
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Application> getApplicationsByStatus(ApplicationStatus status) {
-       return applicationRepository.getApplicationsByStatus(status);
+        return applicationRepository.getApplicationsByStatus(status);
     }
 
     @Override
@@ -106,7 +106,7 @@ public class DefaultApplicationService implements ApplicationService {
             LocalDateTime originArrival = originApplication.getArrival();
             LocalDateTime originLeaving = originApplication.getLeaving();
             if (isBetween(arrival, originArrival, originLeaving) ||
-            isBetween(leaving, originArrival, originLeaving) || isBetween(originArrival, arrival, leaving)) {
+                    isBetween(leaving, originArrival, originLeaving) || isBetween(originArrival, arrival, leaving)) {
                 result = false;
                 break;
             }
