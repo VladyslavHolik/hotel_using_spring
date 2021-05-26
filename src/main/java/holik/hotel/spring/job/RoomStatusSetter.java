@@ -30,7 +30,7 @@ public class RoomStatusSetter {
         this.roomService = roomService;
     }
 
-    @Scheduled(fixedDelay = 300000)
+    @Scheduled(fixedDelay = 300000, initialDelay = 10000)
     public void setRoomStatuses() {
         LOG.info("Room status setting job starts");
         RoomStatus statusFree = RoomStatus.getStatusFree();

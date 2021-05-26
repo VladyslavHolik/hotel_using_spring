@@ -27,7 +27,7 @@ public class BookingRemover {
         this.applicationService = applicationService;
     }
 
-    @Scheduled(fixedDelay=300000)
+    @Scheduled(fixedDelay=300000, initialDelay = 10000)
     public void removeBooking() {
         LOG.info("Booking removing job starts");
 
@@ -36,8 +36,7 @@ public class BookingRemover {
         List<Application> bookedApplications = applicationService.getApplicationsByStatus(statusBooked);
         LocalDateTime now = LocalDateTime.now();
 
-        ApplicationStatus statusDeclined = new ApplicationStatus();
-        statusBooked.setId(3);
+        ApplicationStatus statusDeclined = ApplicationStatus.getStatusDeclined();
 
         for (Application application : bookedApplications) {
             LocalDateTime booked = application.getBooked();

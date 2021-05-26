@@ -31,24 +31,28 @@ public class ApplicationStatus {
     public static ApplicationStatus getStatusBooked() {
         ApplicationStatus statusBooked = new ApplicationStatus();
         statusBooked.setId(4);
+        statusBooked.setStatus("booked");
         return statusBooked;
     }
 
     public static ApplicationStatus getStatusPaid() {
         ApplicationStatus statusPaid = new ApplicationStatus();
         statusPaid.setId(5);
+        statusPaid.setStatus("paid");
         return statusPaid;
     }
 
     public static ApplicationStatus getStatusApproved() {
         ApplicationStatus statusApproved = new ApplicationStatus();
         statusApproved.setId(2);
+        statusApproved.setStatus("approved");
         return statusApproved;
     }
 
     public static ApplicationStatus getStatusDeclined() {
         ApplicationStatus statusDeclined = new ApplicationStatus();
         statusDeclined.setId(3);
+        statusDeclined.setStatus("declined");
         return statusDeclined;
     }
 
